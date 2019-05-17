@@ -1,0 +1,178 @@
+@import "global.css";
+@import "planet.css";
+@import "spaceshipOnPlanet.css";
+@import "spaceshipBetweenPlanets.css";
+
+body {
+  background-image: url("../img/stars.jpg");
+  display: grid;
+  grid-template-columns: 1fr 30% 50% 1fr;
+  grid-template-rows: auto auto;
+}
+
+body > header {
+  background-color: #c6d5eb;
+  grid-column: 1 / 5;
+  grid-row: 1 / 2;
+  height: 80px;
+  margin: 20px 100px;
+  border-radius: 30px;
+}
+
+body > header > .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin: 0 50px;
+  font-size: 25px;
+}
+
+body > header a {
+  height: 100%;
+  margin-right: -50px;
+  padding: 0 50px;
+  border-radius: 0 30px 30px 0;
+  text-decoration: none;
+  color: Crimson;
+  transition: background-color 0.15s;
+}
+
+body > header a:hover {
+  background-color: #d9e3f2;
+}
+
+body > header a:focus {
+  background-color: #d9e3f2;
+  outline: none;
+}
+
+body > header a > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.planets-list {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.spaceships-list {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+.planets-list li {
+  display: block;
+  text-align: center;
+}
+
+.spaceships-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spaceships-list li span:nth-child(1) {
+  text-align: left;
+}
+
+.spaceships-list li span:nth-child(2) {
+  text-align: right;
+}
+
+@media only screen and (max-width: 1200px) {
+  body {
+    grid-template-columns: 1fr 30% 70% 1fr;
+  }
+
+  body > header {
+    margin: 20px 20px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  body {
+    grid-template-rows: auto auto auto;
+  }
+
+  body > header {
+    height: auto;
+  }
+
+  body > header > .header-content {
+    flex-wrap: wrap;
+    align-content: space-around;
+    height: auto;
+    margin: 0;
+  }
+
+  body > header > .header-content > span, body > header > .header-content > a {
+    width: 50%;
+    text-align: center;
+    padding: 15px;
+  }
+
+  body > header > .header-content > a {
+    margin: 0;
+    border-radius: 0 0 30px 0;
+  }
+
+  .planets-list {
+    grid-column: 2 / 4;
+    grid-row: 3 / 4;
+  }
+
+  .spaceships-list {
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .planets-list, .spaceships-list {
+    padding: 10px 15px;
+  }
+
+  .planets-list li, .spaceships-list li {
+    padding: 15px 20px;
+  }
+
+  .planets-list li span, .spaceships-list li span {
+    margin: 0 5px;
+  }
+
+  .planets-list li.first, .spaceships-list li.first {
+    padding: 5px 20px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  body > header > .header-content {
+    font-size: 18px;
+  }
+
+  .planets-list, .spaceships-list {
+    padding: 10px;
+  }
+
+  .planets-list > header, .spaceships-list > header {
+    font-size: 18px;
+  }
+
+  .planets-list li, .spaceships-list li {
+    padding: 15px 10px;
+    font-size: 14px;
+  }
+
+  .planets-list li.first, .spaceships-list li.first {
+    padding: 5px 10px;
+    font-size: 15px;
+  }
+
+  .planets-list li span, .spaceships-list li span {
+    margin: 0 5px;
+  }
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>Gra</title>
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <span id="username-container">Gracz:    </span>
+      <span id="credits-container">Kredyty: 3023</span>
+      <span id="time-container">Czas: </span>
+      <a href="index.html"><span>Przerwij grę</span></a>
+    </div>
+  </header>
+  <div class="planets-list clickable-list list outside-popups">
+    <header>Planety</header>
+    <ul></ul>
+  </div>
+  <div class="spaceships-list clickable-list list outside-popups">
+    <header>Statki</header>
+    <ul>
+      <li class="first">
+        <span>Statek</span>
+        <span>Położenie</span>
+      </li>
+    </ul>
+  </div>
+  <div class="frames-container">
+    <div id="planet-popup" class="popup">
+      <header>
+        <div class="header-content">
+          <img src="img/planet.jpg" alt="" />
+          <span class="name">Alderaan</span>
+          <span class="coords">
+            Współrzędne<br />
+            x: 15, y: 32
+          </span>
+        </div>
+      </header>
+      <div class="items-list list">
+        <header>Towary</header>
+        <ul>
+          <li class="first">
+            <span>Nazwa</span>
+            <span>Ilość</span>
+            <span>Cena kupna</span>
+            <span>Cena sprzedaży</span>
+          </li>
+        </ul>
+      </div>
+      <div class="spaceships-list clickable-list list">
+        <header>Statki na planecie</header>
+        <ul></ul>
+      </div>
+      <div class="placeholder-1"></div>
+    </div>
+    <div id="spaceship-on-planet-popup" class="popup">
+      <header>
+        <div class="header-content">
+          <img src="img/spaceship.jpg" alt="" />
+          <span class="name">Enterprise</span>
+          <span class="coords">
+            Alderaan
+          </span>
+        </div>
+      </header>
+      <div class="items-list spaceship-cargo list">
+        <header>
+          Ładunek<br />
+          (32/46)
+        </header>
+        <form action="#">
+          <ul>
+            <li class="first">
+              <span><span class="aligner">Nazwa</span></span>
+              <span><span class="aligner">Ilość</span></span>
+              <span class="trade"><span class="aligner">Sprzedaj</span></span>
+            </li>
+            <li>
+              <span><span class="aligner">Cynamon</span></span>
+              <span><span class="aligner">13</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="13" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Dwimeryt</span></span>
+              <span><span class="aligner">7</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="7" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Nuka-Cola</span></span>
+              <span><span class="aligner">12</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="12" /><input type="submit" value=">"/></span>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="items-list items-on-planet list">
+        <header>Towary na planecie</header>
+        <form>
+          <ul>
+            <li class="first">
+              <span><span class="aligner">Nazwa</span></span>
+              <span><span class="aligner">Ilość</span></span>
+              <span><span class="aligner">Cena kupna</span></span>
+              <span><span class="aligner">Cena sprzedaży</span></span>
+              <span class="trade"><span class="aligner">Kup</span></span>
+            </li>
+            <li>
+              <span><span class="aligner">Cynamon</span></span>
+              <span><span class="aligner">74</span></span>
+              <span><span class="aligner">6</span></span>
+              <span><span class="aligner">6</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="74" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Dwimeryt</span></span>
+              <span><span class="aligner">42</span></span>
+              <span><span class="aligner">12</span></span>
+              <span><span class="aligner">11</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="42" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Nuka-Cola</span></span>
+              <span><span class="aligner">34</span></span>
+              <span><span class="aligner">13</span></span>
+              <span><span class="aligner">12</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="34" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Proteańskie Dyski</span></span>
+              <span><span class="aligner">5</span></span>
+              <span><span class="aligner">76</span></span>
+              <span><span class="aligner">69</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="5" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Unobtainium</span></span>
+              <span><span class="aligner">23</span></span>
+              <span><span class="aligner">33</span></span>
+              <span><span class="aligner">31</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="23" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Woda</span></span>
+              <span><span class="aligner">22</span></span>
+              <span><span class="aligner">19</span></span>
+              <span><span class="aligner">18</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="22" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Ziemniaki</span></span>
+              <span><span class="aligner">10</span></span>
+              <span><span class="aligner">92</span></span>
+              <span><span class="aligner">86</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="10" /><input type="submit" value=">"/></span>
+            </li>
+            <li>
+              <span><span class="aligner">Złoto</span></span>
+              <span><span class="aligner">12</span></span>
+              <span><span class="aligner">19</span></span>
+              <span><span class="aligner">17</span></span>
+              <span class="trade"><input type="number" value="0" min="0" max="12" /><input type="submit" value=">"/></span>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="planets-list clickable-list list">
+        <header>Leć na inną planetę</header>
+        <ul></ul>
+      </div>
+      <div class="placeholder-1"></div>
+    </div>
+    <div id="spaceship-between-planets-popup" class="popup">
+      <header>
+        <div class="header-content">
+          <img src="img/spaceshipBetweenPlanets.jpg" alt="" />
+          <span class="name">Goliath</span>
+          <span class="coords">
+            Sur'Kesh -> NowWhat
+          </span>
+        </div>
+      </header>
+      <div class="items-list">
+        <header>
+          Ładunek<br />
+          (27/33)
+        </header>
+        <ul></ul>
+      </div>
+      <div class="placeholder-1"></div>
+    </div>
+  </div>
+  
+  <script type="text/javascript" src="js/initialData.js"></script>
+  <script type="text/javascript" src="js/initialDataInterface.js"></script>
+
+  <script type="text/javascript" src="js/gameClass.js"></script>
+  <script type="text/javascript" src="js/planetClass.js"></script>
+  <script type="text/javascript" src="js/starshipClass.js"></script>
+  <script type="text/javascript" src="js/itemOnPlanetClass.js"></script>
+  <script type="text/javascript" src="js/itemOnStarshipClass.js"></script>
+
+  <script type="text/javascript" src="js/planetDataClass.js"></script>
+  <script type="text/javascript" src="js/starshipOnPlanetDataClass.js"></script>
+  <script type="text/javascript" src="js/starshipBetweenPlanetsDataClass.js"></script>
+
+  <script type="text/javascript" src="js/planetsList.js"></script>
+  <script type="text/javascript" src="js/starshipsList.js"></script>
+  <script type="text/javascript" src="js/itemsOnStarshipList.js"></script>
+  <script type="text/javascript" src="js/planet.js"></script>
+
+  <script type="text/javascript" src="js/game.js"></script>
+  <script type="text/javascript" src="js/keys.js"></script>
+</body>
+</html>

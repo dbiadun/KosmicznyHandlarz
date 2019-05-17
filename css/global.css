@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.frames-container {
+  background-color: rgb(0, 0, 0, 0.85);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  border: none;
+  opacity: 0;
+  transition-property: opacity, z-index;
+  transition-duration: 0.35s;
+  transition-timing-function: ease-in;
+  margin-bottom: 30px;
+}
+
+.popup {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  border: none;
+  opacity: 0;
+  transition-property: opacity, z-index;
+  transition-duration: 0.35s;
+  transition-timing-function: ease-in;
+}
+
+.visible {
+  opacity: 1;
+  z-index: 5;
+  transition-property: opacity;
+}
+
+input[type=submit] {
+  background-color: LightGrey;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+input[type=submit]:hover, input[type=submit]:focus {
+  background-color: Gainsboro;
+}
+
+input[type=submit]::-moz-focus-inner {
+  border: 0;
+}
+
+.clickable-list li {
+  cursor: pointer;
+  transition: box-shadow 0.10s;
+}
+
+.clickable-list li:hover, .clickable-list li:focus {
+  box-shadow: 2px 3px 6px 5px grey;
+  outline: none;
+}
+
+.list {
+  background-color: #c6d5eb;
+  padding: 10px 30px;
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.list > header {
+  padding: 20px;
+  font-size: 25px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.list ul {
+  list-style: none;
+}
+
+.list li {
+  background-color: #213a5f;
+  color: #c6d5eb;
+  border-radius: 20px;
+  padding: 15px 30px;
+  margin: 10px 0;
+  font-size: 17px;
+}
+
+.list li.first {
+  background-color: inherit;
+  color: black;
+  padding: 5px 30px;
+  font-size: 18px;
+  cursor: auto;
+}
+
+.list li.first:hover, .list li.first:focus {
+  box-shadow: none;
+}
+
+.placeholder-1 {
+  height: 10px;
+}
