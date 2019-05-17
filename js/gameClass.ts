@@ -88,6 +88,55 @@ class Game {
     updateStarshipsList(this.starshipsListContainer, this.starships);
   }
 
+  public sellItem(item: ItemOnStarship, countString: string, planet: Planet, starship: Starship): string {
+    let count: number = parseInt(countString);
+    if (count > item.getCount()) {
+      return "Zbyt mało towaru na statku";
+    } else if (count < 0) {
+      return "Podaj dodatnią liczbę";
+    } else if (isNaN(count)) {
+      return "Podaj liczbę";
+    }
+
+    let price: number = planet.getItemSellPrice(item.getItemName());
+    this.credits += count * price;
+    starship.sellItem(item, count);
+    planet.sellItem(item, count);
+
+    this.updateCredits();
+    this.currentStarshipOnPlanet.updateSpaceUsage();
+    this.currentStarshipOnPlanet.updateItemsToSellList();
+    this.currentStarshipOnPlanet.updateItemsToBuyList();
+
+    return "";
+  }
+
+  public buyItem(item: ItemOnPlanet, countString: string, planet: Planet, starship: Starship): string {
+    let count: number = parseInt(countString);
+    if (count > item.getCount()) {
+      return "Towar niedostępny w tak dużej liczbie";
+    } else if (count < 0) {
+      return "Podaj dodatnią liczbę";
+    } else if (isNaN(count)) {
+      return "Podaj liczbę";
+    } else if (count * item.getBuyPrice() > this.credits) {
+      return "Zbyt mało kredytów";
+    } else if (count > starship.getSpace() - starship.getUsedSpace()) {
+      return "Za mało miejsca na statku";
+    }
+
+    this.credits -= count * item.getBuyPrice();
+    starship.buyItem(item, count);
+    planet.buyItem(item, count);
+
+    this.updateCredits();
+    this.currentStarshipOnPlanet.updateSpaceUsage();
+    this.currentStarshipOnPlanet.updateItemsToSellList();
+    this.currentStarshipOnPlanet.updateItemsToBuyList();
+
+    return "";
+  }
+
   private initTimer() {
     this.updateTime();
     setInterval(() => {

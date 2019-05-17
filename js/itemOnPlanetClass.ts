@@ -11,7 +11,6 @@ class ItemOnPlanet {
     this.sellPrice = item.sell_price;
   }
 
-
   public buy(count: number) {
     this.available -= count;
   }

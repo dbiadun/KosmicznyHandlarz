@@ -3,6 +3,7 @@ class StarshipOnPlanetData {
   private popupParts: NodeListOf<HTMLElement> = document.querySelectorAll("#spaceship-on-planet-popup > header, #spaceship-on-planet-popup .items-list, #spaceship-on-planet-popup .planets-list");
   private nameContainer: HTMLElement = document.querySelector("#spaceship-on-planet-popup .header-content .name") as HTMLElement;
   private positionContainer: HTMLElement = document.querySelector("#spaceship-on-planet-popup .header-content .coords") as HTMLElement;
+  private spaceUsageContainer: HTMLElement = document.querySelector("#spaceship-on-planet-popup .items-list header") as HTMLElement;
   private itemsToSellListContainer: HTMLUListElement = document.querySelector("#spaceship-on-planet-popup .spaceship-cargo ul") as HTMLUListElement;
   private itemsToBuyListContainer: HTMLUListElement = document.querySelector("#spaceship-on-planet-popup .items-on-planet ul") as HTMLUListElement;
   private planetsListContainer: HTMLUListElement = document.querySelector("#spaceship-on-planet-popup .planets-list ul") as HTMLUListElement;
@@ -36,27 +37,35 @@ class StarshipOnPlanetData {
     }
   }
 
-  // public updateItemsToSellList() {
-  //   if (this.starship) {
-  //     updateItemsList(this.itemsToSellListContainer, this.starship.getItems());
-  //   }
-  // }
-  //
-  // public updateItemsToBuyList() {
-  //   if (this.starship) {
-  //     updateItemsList(this.itemsListContainer, this.planet.getItems())
-  //   }
-  // }
-  //
-  public updatePlanetsList() {
+  public updateSpaceUsage() {
     if (this.starship) {
-      updatePlanetsList(this.planetsListContainer, this.game.getPlanets());
+      this.spaceUsageContainer.innerHTML = "Ładunek<br />(" + this.starship.getUsedSpace() + "/" + this.starship.getSpace() + ")"
     }
+  }
+
+  public updateItemsToSellList() {
+    if (this.starship) {
+      updateStarshipOnPlanetItemsToSellList(this.itemsToSellListContainer, this.starship.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+    }
+  }
+
+  public updateItemsToBuyList() {
+    let planet: Planet | null = this.getPlanet();
+    if (planet && this.starship) {
+      updateStarshipOnPlanetItemsToBuyList(this.itemsToBuyListContainer, planet.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+    }
+  }
+
+  public updatePlanetsList() {
+    updatePlanetsList(this.planetsListContainer, this.game.getPlanets());
   }
 
   public update() {
     this.updateName();
     this.updatePosition();
+    this.updateSpaceUsage();
+    this.updateItemsToSellList();
+    this.updateItemsToBuyList();
     this.updatePlanetsList();
     if (this.starship) {
       let planetNumber: number = this.game.getPlanetsDictionary()[this.starship.getPosition()].getNumber();
@@ -70,6 +79,13 @@ class StarshipOnPlanetData {
     if (this.popup.parentElement) {
       this.popup.parentElement.classList.add("visible");
     }
+  }
+
+  private getPlanet(): Planet | null {
+    if (this.starship) {
+      return this.game.getPlanetsDictionary()[this.starship.getPosition()];
+    }
+    return null;
   }
 
   private hide() {
