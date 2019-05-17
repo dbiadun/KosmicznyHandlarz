@@ -4,6 +4,7 @@ class Game {
   private timeContainer: HTMLElement = document.getElementById("time-container") as HTMLElement;
   private planetsListContainer: HTMLUListElement = document.querySelector(".outside-popups.planets-list ul") as HTMLUListElement;
   private starshipsListContainer: HTMLUListElement = document.querySelector(".outside-popups.spaceships-list ul") as HTMLUListElement;
+  private returnButton: HTMLElement = document.getElementById("return-button") as HTMLElement;
 
   private initialData: IAppData = initialData;
   private username: string;
@@ -26,6 +27,10 @@ class Game {
     this.starships = this.initStarships();
     this.items = this.initItems();
     this.initMainView();
+  }
+
+  public setCurrentView(view: View) {
+    this.currentView = view;
   }
 
   public setMainView() {
@@ -137,14 +142,60 @@ class Game {
     return "";
   }
 
+  public startJourney(starship: Starship, planet: Planet) {
+    this.planetsDictionary[starship.getPlanet()].removeStarship(starship);
+    starship.startJourney(planet);
+    this.updateStarshipsList();
+    this.setStarshipBetweenPlanetsView(starship);
+  }
+
+  public endJourney(starship: Starship, planet: Planet) {
+    planet.addStarship(starship);
+    this.updateStarshipsList();
+    if (this.currentView === View.starshipBetweenPlanets && this.currentStarshipBetweenPlanets.getStarship() === starship) {
+      this.setStarshipOnPlanetView(starship);
+    }
+  }
+
   private initTimer() {
+    let self = this;
     this.updateTime();
-    setInterval(() => {
-      if (this.time > 0) {
-        this.time--;
-        this.updateTime();
+    let intv = setInterval(nextSecond, 1000);
+
+    function nextSecond() {
+      if (self.time > 0) {
+        self.time--;
+        self.updateTime();
       }
-    }, 1000);
+      if (self.time <= 0) {
+        clearInterval(intv);
+        let rankingString: string | null = localStorage.getItem("ranking");
+        let ranking: { username: string, score: number }[];
+        if (rankingString) {
+          ranking = JSON.parse(rankingString);
+        } else {
+          ranking = [];
+        }
+        ranking.push({ username: self.username, score: self.credits });
+        for (let i = ranking.length - 1; i > 0; i--) {
+          if (ranking[i].score > ranking[i - 1].score) {
+            let helper = ranking[i];
+            ranking[i] = ranking[i - 1];
+            ranking[i - 1] = helper;
+          }
+        }
+        while (ranking.length > 10) {
+          ranking.pop();
+        }
+        localStorage.setItem("ranking", JSON.stringify(ranking));
+
+        if (confirm(`Koniec gry!\nTwój wynik: ${self.credits}`)) {
+          self.returnButton.click();
+        } else {
+          self.returnButton.click();
+        }
+      }
+    }
   }
 
   private initMainView() {

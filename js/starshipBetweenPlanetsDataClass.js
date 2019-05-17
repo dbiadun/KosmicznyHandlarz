@@ -18,6 +18,9 @@ class StarshipBetweenPlanetsData {
     getPopup() {
         return this.popup;
     }
+    getStarship() {
+        return this.starship;
+    }
     updateName() {
         if (this.starship) {
             this.nameContainer.innerText = this.starship.getStarshipName();
@@ -59,6 +62,7 @@ class StarshipBetweenPlanetsData {
                 this.popup.parentElement.classList.remove("visible");
             }
         }
+        this.game.setCurrentView(View.main);
     }
     initPopupActions() {
         this.popup.addEventListener("click", () => { this.hide(); });

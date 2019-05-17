@@ -3,6 +3,8 @@ class Starship {
   private space: number;
   private usedSpace: number = 0;
   private position: string;
+  private x: number = -1;
+  private y: number = -1;
   private items: ItemOnStarship[] = [];
 
   constructor(starshipName: string, starship: IStarship) {
@@ -34,11 +36,41 @@ class Starship {
     this.usedSpace += count;
   }
 
+  public startJourney(nextPlanet: Planet) {
+    let firstPlanet: Planet = game.getPlanetsDictionary()[this.getPlanet()];
+    this.x = firstPlanet.getX();
+    this.y = firstPlanet.getY();
+    this.position = firstPlanet.getPlanetName() + " -> " + nextPlanet.getPlanetName();
+    let xStart = firstPlanet.getX();
+    let yStart = firstPlanet.getY();
+    let xDif = nextPlanet.getX() - firstPlanet.getX();
+    let yDif = nextPlanet.getY() - firstPlanet.getY();
+    let wholeDistance = Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
+    let distance = 0;
+    let step = 0.1;
+    let self = this;
+
+    let intv = setInterval(nextStep, step * 1000);
+
+    function nextStep() {
+      if (distance >= wholeDistance) {
+        clearInterval(intv);
+        self.x = xStart + xDif;
+        self.y = yStart + yDif;
+        self.position = nextPlanet.getPlanetName();
+        game.endJourney(self, nextPlanet);
+      }
+      distance += step;
+      self.x = xStart + distance * xDif / wholeDistance;
+      self.y = yStart + distance * yDif / wholeDistance;
+    }
+  }
+
   public getStarshipName(): string {
     return this.starshipName;
   }
 
-  public getSpace() {
+  public getSpace(): number {
     return this.space;
   }
 
@@ -48,6 +80,14 @@ class Starship {
 
   public getPosition(): string {
     return this.position;
+  }
+
+  public getX(): number {
+    return this.x;
+  }
+
+  public getY(): number {
+    return this.y;
   }
 
   public getItems(): ItemOnStarship[] {

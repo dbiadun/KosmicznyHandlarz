@@ -70,6 +70,7 @@ class PlanetData {
         this.popup.parentElement.classList.remove("visible");
       }
     }
+    this.game.setCurrentView(View.main);
   }
 
   private initPopupActions() {

@@ -6,6 +6,7 @@ class Game {
         this.timeContainer = document.getElementById("time-container");
         this.planetsListContainer = document.querySelector(".outside-popups.planets-list ul");
         this.starshipsListContainer = document.querySelector(".outside-popups.spaceships-list ul");
+        this.returnButton = document.getElementById("return-button");
         this.initialData = initialData;
         this.planetsDictionary = {};
         this.currentPlanet = new PlanetData(this);
@@ -19,6 +20,9 @@ class Game {
         this.starships = this.initStarships();
         this.items = this.initItems();
         this.initMainView();
+    }
+    setCurrentView(view) {
+        this.currentView = view;
     }
     setMainView() {
         this.currentView = View.main;
@@ -115,14 +119,58 @@ class Game {
         this.currentStarshipOnPlanet.updateItemsToBuyList();
         return "";
     }
+    startJourney(starship, planet) {
+        this.planetsDictionary[starship.getPlanet()].removeStarship(starship);
+        starship.startJourney(planet);
+        this.updateStarshipsList();
+        this.setStarshipBetweenPlanetsView(starship);
+    }
+    endJourney(starship, planet) {
+        planet.addStarship(starship);
+        this.updateStarshipsList();
+        if (this.currentView === View.starshipBetweenPlanets && this.currentStarshipBetweenPlanets.getStarship() === starship) {
+            this.setStarshipOnPlanetView(starship);
+        }
+    }
     initTimer() {
+        let self = this;
         this.updateTime();
-        setInterval(() => {
-            if (this.time > 0) {
-                this.time--;
-                this.updateTime();
+        let intv = setInterval(nextSecond, 1000);
+        function nextSecond() {
+            if (self.time > 0) {
+                self.time--;
+                self.updateTime();
             }
-        }, 1000);
+            if (self.time <= 0) {
+                clearInterval(intv);
+                let rankingString = localStorage.getItem("ranking");
+                let ranking;
+                if (rankingString) {
+                    ranking = JSON.parse(rankingString);
+                }
+                else {
+                    ranking = [];
+                }
+                ranking.push({ username: self.username, score: self.credits });
+                for (let i = ranking.length - 1; i > 0; i--) {
+                    if (ranking[i].score > ranking[i - 1].score) {
+                        let helper = ranking[i];
+                        ranking[i] = ranking[i - 1];
+                        ranking[i - 1] = helper;
+                    }
+                }
+                while (ranking.length > 10) {
+                    ranking.pop();
+                }
+                localStorage.setItem("ranking", JSON.stringify(ranking));
+                if (confirm(`Koniec gry!\nTwój wynik: ${self.credits}`)) {
+                    self.returnButton.click();
+                }
+                else {
+                    self.returnButton.click();
+                }
+            }
+        }
     }
     initMainView() {
         this.updateUsername();

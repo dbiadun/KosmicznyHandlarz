@@ -10,6 +10,7 @@ class StarshipOnPlanetData {
         this.itemsToBuyListContainer = document.querySelector("#spaceship-on-planet-popup .items-on-planet ul");
         this.planetsListContainer = document.querySelector("#spaceship-on-planet-popup .planets-list ul");
         this.popupOpen = false;
+        this.listsCreator = new StarshipOnPlanetListsCreator();
         this.starship = null;
         this.game = game;
         this.initPopupActions();
@@ -19,6 +20,9 @@ class StarshipOnPlanetData {
     }
     getPopup() {
         return this.popup;
+    }
+    getStarship() {
+        return this.starship;
     }
     updateName() {
         if (this.starship) {
@@ -37,17 +41,21 @@ class StarshipOnPlanetData {
     }
     updateItemsToSellList() {
         if (this.starship) {
-            updateStarshipOnPlanetItemsToSellList(this.itemsToSellListContainer, this.starship.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+            this.listsCreator.updateSellList(this.itemsToSellListContainer, this.starship.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
         }
     }
     updateItemsToBuyList() {
         let planet = this.getPlanet();
         if (planet && this.starship) {
-            updateStarshipOnPlanetItemsToBuyList(this.itemsToBuyListContainer, planet.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+            this.listsCreator.updateBuyList(this.itemsToBuyListContainer, planet.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
         }
     }
     updatePlanetsList() {
-        updatePlanetsList(this.planetsListContainer, this.game.getPlanets());
+        if (this.starship) {
+            this.listsCreator.updatePlanetsList(this.planetsListContainer, this.starship, this.game.getPlanets());
+            let planetNumber = this.game.getPlanetsDictionary()[this.starship.getPosition()].getNumber();
+            hidePlanetsListElement(this.planetsListContainer, planetNumber);
+        }
     }
     update() {
         this.updateName();
@@ -56,10 +64,6 @@ class StarshipOnPlanetData {
         this.updateItemsToSellList();
         this.updateItemsToBuyList();
         this.updatePlanetsList();
-        if (this.starship) {
-            let planetNumber = this.game.getPlanetsDictionary()[this.starship.getPosition()].getNumber();
-            hidePlanetsListElement(this.planetsListContainer, planetNumber);
-        }
     }
     show() {
         this.popupOpen = true;
@@ -82,6 +86,7 @@ class StarshipOnPlanetData {
                 this.popup.parentElement.classList.remove("visible");
             }
         }
+        this.game.setCurrentView(View.main);
     }
     initPopupActions() {
         this.popup.addEventListener("click", () => { this.hide(); });

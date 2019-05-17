@@ -9,6 +9,7 @@ class StarshipOnPlanetData {
   private planetsListContainer: HTMLUListElement = document.querySelector("#spaceship-on-planet-popup .planets-list ul") as HTMLUListElement;
   private popupOpen: boolean = false;
 
+  private listsCreator: StarshipOnPlanetListsCreator = new StarshipOnPlanetListsCreator();
   private starship: Starship | null = null;
   private game: Game;
 
@@ -23,6 +24,10 @@ class StarshipOnPlanetData {
 
   public getPopup(): HTMLElement {
     return this.popup;
+  }
+
+  public getStarship(): Starship | null {
+    return this.starship;
   }
 
   public updateName() {
@@ -45,19 +50,23 @@ class StarshipOnPlanetData {
 
   public updateItemsToSellList() {
     if (this.starship) {
-      updateStarshipOnPlanetItemsToSellList(this.itemsToSellListContainer, this.starship.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+      this.listsCreator.updateSellList(this.itemsToSellListContainer, this.starship.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
     }
   }
 
   public updateItemsToBuyList() {
     let planet: Planet | null = this.getPlanet();
     if (planet && this.starship) {
-      updateStarshipOnPlanetItemsToBuyList(this.itemsToBuyListContainer, planet.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
+      this.listsCreator.updateBuyList(this.itemsToBuyListContainer, planet.getItems(), this.game.getPlanetsDictionary()[this.starship.getPlanet()], this.starship);
     }
   }
 
   public updatePlanetsList() {
-    updatePlanetsList(this.planetsListContainer, this.game.getPlanets());
+    if (this.starship) {
+      this.listsCreator.updatePlanetsList(this.planetsListContainer, this.starship, this.game.getPlanets());
+      let planetNumber: number = this.game.getPlanetsDictionary()[this.starship.getPosition()].getNumber();
+      hidePlanetsListElement(this.planetsListContainer, planetNumber);
+    }
   }
 
   public update() {
@@ -67,10 +76,6 @@ class StarshipOnPlanetData {
     this.updateItemsToSellList();
     this.updateItemsToBuyList();
     this.updatePlanetsList();
-    if (this.starship) {
-      let planetNumber: number = this.game.getPlanetsDictionary()[this.starship.getPosition()].getNumber();
-      hidePlanetsListElement(this.planetsListContainer, planetNumber);
-    }
   }
 
   public show() {
@@ -96,6 +101,7 @@ class StarshipOnPlanetData {
         this.popup.parentElement.classList.remove("visible");
       }
     }
+    this.game.setCurrentView(View.main);
   }
 
   private initPopupActions() {

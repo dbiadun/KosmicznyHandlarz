@@ -47,6 +47,17 @@ class Planet {
     this.starships.push(starship);
   }
 
+  public removeStarship(starship: Starship) {
+    for (let i = 0; i < this.starships.length; i++) {
+      if (this.starships[i] === starship) {
+        this.starships[i] = this.starships[this.starships.length - 1];
+        this.starships[this.starships.length - 1] = starship;
+        this.starships.pop();
+        return;
+      }
+    }
+  }
+
   public getNumber(): number {
     return this.number;
   }
