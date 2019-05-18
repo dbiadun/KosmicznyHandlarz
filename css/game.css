@@ -7,7 +7,8 @@ body {
   background-image: url("../img/stars.jpg");
   display: grid;
   grid-template-columns: 1fr 30% 50% 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
+  text-align: center;
 }
 
 body > header {
@@ -64,6 +65,58 @@ body > header a > span {
   grid-row: 2 / 3;
 }
 
+.map-container {
+  grid-column: 2 / 4;
+  grid-row: 3 / 4;
+  padding: 0;
+}
+
+.map-container .svg-container {
+  margin: 2%;
+  width: 96%;
+  background-color: #213a5f;
+  border-radius: 20px;
+}
+
+.svg-container svg {
+  width: 94%;
+  margin: 3%;
+}
+
+svg circle {
+  z-index: 12;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.map-names-popup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 30px;
+  width: 400px;
+  padding: 20px;
+  background-color: rgb(150, 150, 150, 0.9);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 21px;
+  z-index: -1;
+  opacity: 0;
+  transition-property: opacity, z-index;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-in-out;
+}
+
+.map-names-popup.visible {
+  opacity: 1;
+  z-index: 5;
+  transition-property: opacity;
+}
+
 .planets-list li {
   display: block;
   text-align: center;
@@ -95,7 +148,7 @@ body > header a > span {
 
 @media only screen and (max-width: 900px) {
   body {
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
   }
 
   body > header {
@@ -129,6 +182,12 @@ body > header a > span {
     grid-column: 2 / 4;
     grid-row: 2 / 3;
   }
+
+  .map-container {
+    grid-column: 2 / 4;
+    grid-row: 4 / 5;
+    padding: 0;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -146,6 +205,12 @@ body > header a > span {
 
   .planets-list li.first, .spaceships-list li.first {
     padding: 5px 20px;
+  }
+
+  .map-names-popup {
+    width: auto;
+    margin: 0 5%;
+    font-size: 18px;
   }
 }
 

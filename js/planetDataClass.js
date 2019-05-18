@@ -18,6 +18,9 @@ class PlanetData {
     getPopup() {
         return this.popup;
     }
+    getPlanet() {
+        return this.planet;
+    }
     updateName() {
         if (this.planet) {
             this.nameContainer.innerText = this.planet.getPlanetName();

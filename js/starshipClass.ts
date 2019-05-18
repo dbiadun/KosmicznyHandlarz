@@ -36,7 +36,7 @@ class Starship {
     this.usedSpace += count;
   }
 
-  public startJourney(nextPlanet: Planet) {
+  public startJourney(nextPlanet: Planet, map: SpaceMap) {
     let firstPlanet: Planet = game.getPlanetsDictionary()[this.getPlanet()];
     this.x = firstPlanet.getX();
     this.y = firstPlanet.getY();
@@ -49,6 +49,8 @@ class Starship {
     let distance = 0;
     let step = 0.1;
     let self = this;
+    map.addStarship(this);
+
 
     let intv = setInterval(nextStep, step * 1000);
 

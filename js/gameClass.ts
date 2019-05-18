@@ -7,6 +7,7 @@ class Game {
   private returnButton: HTMLElement = document.getElementById("return-button") as HTMLElement;
 
   private initialData: IAppData = initialData;
+  private spaceMap: SpaceMap;
   private username: string;
   private credits: number;
   private time: number;
@@ -20,6 +21,7 @@ class Game {
   private currentView: View = View.main;
 
   constructor() {
+    this.spaceMap = new SpaceMap();
     this.username = this.initUsername();
     this.credits = this.initCredits();
     this.time = this.initTime();
@@ -143,14 +145,18 @@ class Game {
   }
 
   public startJourney(starship: Starship, planet: Planet) {
-    this.planetsDictionary[starship.getPlanet()].removeStarship(starship);
-    starship.startJourney(planet);
+    let startPlanet = this.planetsDictionary[starship.getPlanet()];
+    startPlanet.removeStarship(starship);
+    starship.startJourney(planet, this.spaceMap);
     this.updateStarshipsList();
     this.setStarshipBetweenPlanetsView(starship);
   }
 
   public endJourney(starship: Starship, planet: Planet) {
     planet.addStarship(starship);
+    if (this.currentView === View.planet && this.currentPlanet.getPlanet() === planet) {
+      this.currentPlanet.updateStarshipsList();
+    }
     this.updateStarshipsList();
     if (this.currentView === View.starshipBetweenPlanets && this.currentStarshipBetweenPlanets.getStarship() === starship) {
       this.setStarshipOnPlanetView(starship);
@@ -228,6 +234,7 @@ class Game {
       planets.push(planet);
       this.planetsDictionary[planetName] = planet;
       i++;
+      this.spaceMap.addPlanet(planet);
     }
     return planets;
   }

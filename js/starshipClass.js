@@ -28,7 +28,7 @@ class Starship {
         item.buy(count);
         this.usedSpace += count;
     }
-    startJourney(nextPlanet) {
+    startJourney(nextPlanet, map) {
         let firstPlanet = game.getPlanetsDictionary()[this.getPlanet()];
         this.x = firstPlanet.getX();
         this.y = firstPlanet.getY();
@@ -41,6 +41,7 @@ class Starship {
         let distance = 0;
         let step = 0.1;
         let self = this;
+        map.addStarship(this);
         let intv = setInterval(nextStep, step * 1000);
         function nextStep() {
             if (distance >= wholeDistance) {

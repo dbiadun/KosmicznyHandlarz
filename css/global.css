@@ -64,14 +64,14 @@ input[type=submit]::-moz-focus-inner {
   outline: none;
 }
 
-.list {
+.list, .map-container {
   background-color: #c6d5eb;
   padding: 10px 30px;
   margin: 20px;
   border-radius: 20px;
 }
 
-.list > header {
+.list > header, .map-container > header  {
   padding: 20px;
   font-size: 25px;
   text-align: center;

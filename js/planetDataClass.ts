@@ -23,6 +23,10 @@ class PlanetData {
     return this.popup;
   }
 
+  public getPlanet(): Planet | null {
+    return this.planet;
+  }
+
   public updateName() {
     if (this.planet) {
       this.nameContainer.innerText = this.planet.getPlanetName();

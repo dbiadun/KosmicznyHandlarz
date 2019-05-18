@@ -13,6 +13,7 @@ class Game {
         this.currentStarshipOnPlanet = new StarshipOnPlanetData(this);
         this.currentStarshipBetweenPlanets = new StarshipBetweenPlanetsData(this);
         this.currentView = View.main;
+        this.spaceMap = new SpaceMap();
         this.username = this.initUsername();
         this.credits = this.initCredits();
         this.time = this.initTime();
@@ -120,13 +121,17 @@ class Game {
         return "";
     }
     startJourney(starship, planet) {
-        this.planetsDictionary[starship.getPlanet()].removeStarship(starship);
-        starship.startJourney(planet);
+        let startPlanet = this.planetsDictionary[starship.getPlanet()];
+        startPlanet.removeStarship(starship);
+        starship.startJourney(planet, this.spaceMap);
         this.updateStarshipsList();
         this.setStarshipBetweenPlanetsView(starship);
     }
     endJourney(starship, planet) {
         planet.addStarship(starship);
+        if (this.currentView === View.planet && this.currentPlanet.getPlanet() === planet) {
+            this.currentPlanet.updateStarshipsList();
+        }
         this.updateStarshipsList();
         if (this.currentView === View.starshipBetweenPlanets && this.currentStarshipBetweenPlanets.getStarship() === starship) {
             this.setStarshipOnPlanetView(starship);
@@ -198,6 +203,7 @@ class Game {
             planets.push(planet);
             this.planetsDictionary[planetName] = planet;
             i++;
+            this.spaceMap.addPlanet(planet);
         }
         return planets;
     }
